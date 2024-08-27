@@ -14,8 +14,15 @@ public class PlayerController : NetworkBehaviour {
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
-        _camera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Start() {
+        if (!isLocalPlayer) return;
+        
+        GameObject.FindGameObjectWithTag("MainCamera").transform.SetParent(transform);
+        _camera = GetComponentInChildren<Camera>();
+        _camera.transform.position = new Vector3(0, 1.5f, 0);
     }
 
     private void Update() {
